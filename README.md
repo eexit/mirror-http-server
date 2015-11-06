@@ -1,6 +1,6 @@
 ![logo](logo.png)
 
-# Mirror HTTP Server [![Build Status](https://travis-ci.org/eexit/mirror-http-server.svg)](https://travis-ci.org/eexit/mirror-http-server)
+# Mirror HTTP Server [![Build Status](https://travis-ci.org/eexit/mirror-http-server.svg)](https://travis-ci.org/eexit/mirror-http-server) [![DockerHub](https://img.shields.io/badge/docker-hub-brightgreen.svg?style=flat)](https://hub.docker.com/r/eexit/mirror-http-server/)
 
 *A dummy HTTP server that responds whatever you told him to.*
 
@@ -33,7 +33,7 @@ X-Powered-By: Express
 
 You can use any [HTTP verbs](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods) with any path, any request body and any header.
 
-### Behavioural request headers
+### Server behavioural request headers
 
 You can change the server response code and body by setting specific `X-Mirror-*` headers to your request.
 
@@ -52,7 +52,7 @@ Date: Thu, 05 Nov 2015 22:30:11 GMT
 X-Powered-By: Express
 ```
 
-Here, simulate a `301` redirection:
+Here, simulates a `301` redirection and a `Content-Type` change:
 
     http $(docker-machine ip default) \
         X-Mirror-Code:301 \
@@ -74,7 +74,7 @@ If you add the `--follow` option, it will output my website HTML source.
 If you check the container logs:
 
 ```json
-[2015-11-05T22:48:59.564Z]  INFO: mirror-server/18 on 6cb74ed853b0:
+[2015-11-05T22:48:59.564Z]  INFO: mirror-http-server/18 on 6cb74ed853b0:
     request: {
       "ip": "192.168.99.1",
       "ips": [],
@@ -96,7 +96,7 @@ If you check the container logs:
 
 ### `X-Mirror-Request`
 
-If you access to the server logs or want to exploit the what's logged, set the `X-Mirror-Request` to receive what's logged in a JSON format:
+If you can't access to the container log or want to exploit what's logged under the hood, set the `X-Mirror-Request` to receive the logged entry (as JSON):
 
     $ http POST $(docker-machine ip default)/resource \
         X-Mirror-Code:201 \
@@ -137,9 +137,11 @@ X-Powered-By: Express
 }
 ```
 
+Note: if you don't specify the `true` value for the header, it'll ignored.
+
 ### `X-Mirror-Body`
 
-Instead, if you with the dummy server to return you the same body you requested to it, set the `X-Mirror-Body` header.
+Instead, if you wish the dummy server to return you the body you sent to it, set the `X-Mirror-Body` header.
 
 Note: the `X-Mirror-Request` header will override `X-Mirror-Body` header.
 
@@ -162,6 +164,7 @@ X-Powered-By: Express
     "key2": "value2"
 }
 ```
+Note: if you don't specify the `true` value for the header, it'll ignored.
 
 ### Works for all headers
 
@@ -193,3 +196,7 @@ Will turn into:
 X-Powered-By: eexit-engine
 Date: some date
 ```
+
+## Todo
+
+ - Functional testing
