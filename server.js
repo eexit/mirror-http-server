@@ -1,7 +1,7 @@
 'use strict';
 
-var host = process.env.HOST || '0.0.0.0';
-var port = process.env.PORT || 80;
+var host = '0.0.0.0';
+var port = 80;
 
 var _ = require('lodash');
 var bunyan = require('bunyan');
