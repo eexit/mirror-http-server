@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+if [[ "$TRAVIS_TAG" =~ $TAG_PATTERN ]]; then
+    echo "Pushing $DOCKER_IMAGE:$DOCKER_TAG"
+    docker push $DOCKER_IMAGE:$DOCKER_TAG;
+
+    echo "Tagging $DOCKER_IMAGE:$DOCKER_TAG as $DOCKER_IMAGE:latest"
+    docker tag $DOCKER_IMAGE:$DOCKER_TAG $DOCKER_IMAGE:latest
+
+    echo "Pushing $DOCKER_IMAGE:latest"
+    docker push $DOCKER_IMAGE:latest
+fi
