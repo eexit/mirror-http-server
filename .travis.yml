@@ -10,7 +10,7 @@ services:
     - docker
 
 before_install:
-    - docker login --email=$DOCKER_EMAIL --username=$DOCKER_USER --password=$DOCKER_PASSWD
+    - echo "$DOCKER_PASSWD" | docker login -u "$DOCKER_USER" --password-stdin
 
 install:
     - docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
