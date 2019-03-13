@@ -21,13 +21,13 @@ For this README examples, I use the great [HTTPie](https://github.com/jkbrzt/htt
 
 Send request againt it:
 
-    http $(docker-machine ip default)
+    http :80
 
 ```http
 HTTP/1.1 200 OK
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 05 Nov 2015 21:33:20 GMT
+Date: Wed, 13 Mar 2019 12:38:07 GMT
 X-Powered-By: Express
 ```
 
@@ -42,19 +42,19 @@ You can change the server response code and body by setting specific `X-Mirror-*
 Change the server response [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 Here, simulate a server error:
 
-    $ http $(docker-machine ip default) X-Mirror-Code:503
+    $ http :80 X-Mirror-Code:503
 
 ```http
 HTTP/1.1 503 Service Unavailable
 Connection: keep-alive
 Content-Length: 0
-Date: Thu, 05 Nov 2015 22:30:11 GMT
+Date: Wed, 13 Mar 2019 12:38:39 GMT
 X-Powered-By: Express
 ```
 
 Here, simulates a `301` redirection and a `Content-Type` change:
 
-    http $(docker-machine ip default) \
+    http :80 \
         X-Mirror-Code:301 \
         X-Mirror-Location:http://www.eexit.net \
         X-Mirror-Content-Type:"text/plain; charset=ISO-8859-1"
@@ -64,7 +64,7 @@ HTTP/1.1 301 Moved Permanently
 Connection: keep-alive
 Content-Length: 0
 Content-Type: text/plain; charset=ISO-8859-1
-Date: Thu, 05 Nov 2015 22:40:02 GMT
+Date: Wed, 13 Mar 2019 12:41:35 GMT
 Location: http://www.eexit.net
 X-Powered-By: Express
 ```
@@ -74,20 +74,20 @@ If you add the `--follow` option, it will output my website HTML source.
 If you check the container logs:
 
 ```json
-[2015-11-05T22:48:59.564Z]  INFO: mirror-http-server/18 on 6cb74ed853b0:
+[2019-03-13T12:41:35.567Z]  INFO: mirror-http-server/18 on f9c1a773d75a:
     request: {
-      "ip": "192.168.99.1",
+      "ip": "172.17.0.1",
       "ips": [],
       "method": "GET",
       "url": "/",
       "headers": {
-        "host": "192.168.99.100",
-        "x-mirror-code": "301",
+        "host": "localhost",
+        "user-agent": "HTTPie/1.0.2",
         "accept-encoding": "gzip, deflate",
-        "x-mirror-location": "http://www.eexit.net",
         "accept": "*/*",
-        "user-agent": "HTTPie/0.9.2",
         "connection": "keep-alive",
+        "x-mirror-code": "301",
+        "x-mirror-location": "http://www.eexit.net",
         "x-mirror-content-type": "text/plain; charset=ISO-8859-1"
       },
       "body": {}
@@ -98,7 +98,7 @@ If you check the container logs:
 
 If you can't access to the container log or want to exploit what's logged under the hood, set the `X-Mirror-Request` to receive the logged entry (as JSON):
 
-    $ http POST $(docker-machine ip default)/resource \
+    $ http POST :80/resource \
         X-Mirror-Code:201 \
         X-Mirror-Request:true \
         key1=value1 key2=value2
@@ -106,10 +106,10 @@ If you can't access to the container log or want to exploit what's logged under 
 ```http
 HTTP/1.1 201 Created
 Connection: keep-alive
-Content-Length: 373
+Content-Length: 371
 Content-Type: application/json; charset=utf-8
-Date: Thu, 05 Nov 2015 22:57:17 GMT
-ETag: W/"175-3rxm7gM5Zwu88cZOABP92A"
+Date: Wed, 13 Mar 2019 12:43:02 GMT
+ETag: W/"173-rgXpQ/N7aKeAq+URc1y3vQypNZk"
 X-Powered-By: Express
 
 {
@@ -119,17 +119,17 @@ X-Powered-By: Express
             "key2": "value2"
         },
         "headers": {
-            "accept": "application/json",
+            "accept": "application/json, */*",
             "accept-encoding": "gzip, deflate",
             "connection": "keep-alive",
             "content-length": "36",
             "content-type": "application/json",
-            "host": "192.168.99.100",
-            "user-agent": "HTTPie/0.9.2",
+            "host": "localhost",
+            "user-agent": "HTTPie/1.0.2",
             "x-mirror-code": "201",
             "x-mirror-request": "true"
         },
-        "ip": "192.168.99.1",
+        "ip": "172.17.0.1",
         "ips": [],
         "method": "POST",
         "url": "/resource"
@@ -145,7 +145,7 @@ Instead, if you wish the dummy server to return you the body you sent to it, set
 
 Note: the `X-Mirror-Request` header will override `X-Mirror-Body` header.
 
-    $ http PUT $(docker-machine ip default)/resource \
+    $ http PUT :80/resource \
         X-Mirror-Code:400 \
         X-Mirror-Body:true \
         key1=value1 key2=value2
@@ -155,8 +155,8 @@ HTTP/1.1 400 Bad Request
 Connection: keep-alive
 Content-Length: 33
 Content-Type: application/json; charset=utf-8
-Date: Thu, 05 Nov 2015 23:52:34 GMT
-ETag: W/"21-/0XMODUWUwfvQUwjyixvZw"
+Date: Wed, 13 Mar 2019 12:43:45 GMT
+ETag: W/"21-SWsq4vawbQc/koBuf3CC1L6ssws"
 X-Powered-By: Express
 
 {

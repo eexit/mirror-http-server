@@ -1,7 +1,7 @@
-FROM mhart/alpine-node:5.1
-MAINTAINER Joris Berthelot <admin@eexit.net>
-WORKDIR /src
+FROM mhart/alpine-node
+RUN apk add --no-cache make gcc g++ python
+WORKDIR /app
 COPY . .
-RUN npm install
+RUN npm install --loglevel=error --prod
 EXPOSE 80
 CMD [ "npm", "start" ]
