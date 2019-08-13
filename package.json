@@ -22,10 +22,12 @@
   "author": "Joris Berthelot <admin@eexit.net>",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "bunyan": "^1.8.12",
-    "express": "^4.16.4",
-    "lodash": ">=4.17.11",
-    "nodemon": "^1.18.10"
+    "express": "^4.17.1",
+    "lodash": ">=4.17.15"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
