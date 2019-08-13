@@ -1,6 +1,6 @@
 ![logo](logo.png)
 
-# Mirror HTTP Server [![Build Status](https://travis-ci.org/eexit/mirror-http-server.svg)](https://travis-ci.org/eexit/mirror-http-server) [![DockerHub](https://img.shields.io/badge/docker-hub-brightgreen.svg?style=flat)](https://hub.docker.com/r/eexit/mirror-http-server/)
+# Mirror HTTP Server [![Build Status](https://travis-ci.org/eexit/mirror-http-server.svg)](https://travis-ci.org/eexit/mirror-http-server) [![DockerHub](https://img.shields.io/badge/docker-hub-brightgreen.svg?style=flat)](https://hub.docker.com/r/eexit/mirror-http-server/) [![Greenkeeper badge](https://badges.greenkeeper.io/eexit/mirror-http-server.svg)](https://greenkeeper.io/)
 
 *A dummy HTTP server that responds whatever you told him to.*
 
