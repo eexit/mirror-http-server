@@ -1,6 +1,6 @@
 {
   "name": "mirror-http-server",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A dummy HTTP server that responds whatever you told him to",
   "scripts": {
     "start": "node server.js | npm run bunyan",
