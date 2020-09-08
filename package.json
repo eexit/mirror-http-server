@@ -23,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "bunyan": "^1.8.13",
+    "bunyan": "^1.8.14",
     "express": "^4.17.1",
     "lodash": ">=4.17.20"
   },
