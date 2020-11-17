@@ -28,7 +28,7 @@
     "lodash": ">=4.17.20"
   },
   "devDependencies": {
-    "nodemon": "^2.0.0"
+    "nodemon": "^2.0.6"
   },
   "main": "index.js",
   "repository": "git@eexit:eexit/mirror-http-server.git"
