@@ -1,7 +1,7 @@
 'use strict';
 
 var host = '0.0.0.0';
-var port = 80;
+var port = 8000;
 
 var _ = require('lodash');
 var bunyan = require('bunyan');
@@ -44,7 +44,7 @@ app.all('*', function (req, res, next) {
 
     // Injects X-Mirror-* headers to response headers
     reqHeaders.forEach(function (name) {
-        var resHeader = _.startCase(_.trimStart(name, 'x-mirror-')).replace(' ', '-');
+        var resHeader = _.startCase(_.trimStart(name, 'x-mirror-')).replace(/ /g, '-');
         responseHeaders[resHeader] = req.headers[name];
     });
 
