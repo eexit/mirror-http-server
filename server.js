@@ -44,7 +44,7 @@ app.all('*', function (req, res, next) {
 
     // Injects X-Mirror-* headers to response headers
     reqHeaders.forEach(function (name) {
-        const resHeader = _.startCase(_.trimStart(name, 'x-mirror-')).replace(' ', '-');
+        const resHeader = _.startCase(_.trimStart(name, 'x-mirror-')).replaceAll(' ', '-');
         responseHeaders[resHeader] = req.headers[name];
     });
 
