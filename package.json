@@ -1,35 +1,35 @@
 {
-  "name": "mirror-http-server",
-  "version": "1.1.3",
-  "description": "A dummy HTTP server that responds whatever you told him to",
-  "scripts": {
-    "start": "node server.js | npm run bunyan",
-    "start:dev": "nodemon server.js | npm run bunyan",
-    "test": "echo \"No test specified yet\"",
-    "bunyan": "$(npm bin)/bunyan"
-  },
-  "keywords": [
-    "node",
-    "nodejs",
-    "server",
-    "http",
-    "mirror",
-    "dumb",
-    "dump",
-    "test",
-    "development"
-  ],
-  "author": "Joris Berthelot <admin@eexit.net>",
-  "license": "MIT",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "bunyan": "^1.8.13",
-    "express": "^4.17.1",
-    "lodash": ">=4.17.20"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.0"
-  },
-  "main": "index.js",
-  "repository": "git@eexit:eexit/mirror-http-server.git"
+    "name": "mirror-http-server",
+    "version": "2.0.0",
+    "description": "A dummy HTTP server that responds whatever you told it to",
+    "scripts": {
+        "start": "node server.js | npm run bunyan",
+        "start:dev": "nodemon server.js | npm run bunyan",
+        "test": "echo \"No test specified yet\"",
+        "bunyan": "$(npm bin)/bunyan"
+    },
+    "keywords": [
+        "node",
+        "nodejs",
+        "server",
+        "http",
+        "mirror",
+        "dumb",
+        "dump",
+        "test",
+        "development"
+    ],
+    "author": "Joris Berthelot <admin@eexit.net>",
+    "license": "MIT",
+    "dependencies": {
+        "body-parser": "^1.20.0",
+        "bunyan": "^1.8.15",
+        "express": "^4.18",
+        "lodash": ">=4.17.21"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.0"
+    },
+    "main": "index.js",
+    "repository": "git@eexit:eexit/mirror-http-server.git"
 }

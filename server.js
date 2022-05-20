@@ -1,7 +1,7 @@
 'use strict';
 
 const host = '0.0.0.0',
-    port = 80;
+    port = 8080;
 
 const _ = require('lodash'),
     bunyan = require('bunyan'),
@@ -61,7 +61,6 @@ app.all('*', function (req, res, next) {
     };
 
     logger.info(request);
-
 
     // Prepares the response
     res.status(mirrorCode).set(responseHeaders);

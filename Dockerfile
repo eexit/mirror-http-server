@@ -1,7 +1,7 @@
 FROM node:lts-alpine
-RUN apk add --no-cache make gcc g++ python
+RUN apk add --no-cache yarn
 WORKDIR /app
 COPY . .
-RUN npm install --loglevel=error --prod
-EXPOSE 80
-CMD [ "npm", "start" ]
+RUN yarn --frozen-lockfile --loglevel=error --prod
+EXPOSE 8080
+CMD [ "yarn", "start" ]
