@@ -1,27 +1,27 @@
 ![logo](logo.png)
 
-# Mirror HTTP Server [![Build Status](https://travis-ci.org/eexit/mirror-http-server.svg)](https://travis-ci.org/eexit/mirror-http-server) [![DockerHub](https://img.shields.io/badge/docker-hub-brightgreen.svg?style=flat)](https://hub.docker.com/r/eexit/mirror-http-server/) [![Greenkeeper badge](https://badges.greenkeeper.io/eexit/mirror-http-server.svg)](https://greenkeeper.io/)
+# Mirror HTTP Server [![Build Status](https://travis-ci.org/eexit/mirror-http-server.svg)](https://travis-ci.org/eexit/mirror-http-server) [![DockerHub](https://img.shields.io/badge/docker-hub-brightgreen.svg?style=flat)](https://hub.docker.com/r/eexit/mirror-http-server/)
 
-*A dummy HTTP server that responds whatever you told him to.*
+*A dummy HTTP server that responds whatever you told it to.*
 
-Build to play with HTTP or test your API. Make a HTTP call to the dummy server with the specified headers you want the server responds with.
+Built to play with HTTP or test your API. Make a HTTP call to the dummy server with the specified headers you want the server responds with.
 
 ## Usage
 
-Pull the [Docker](https://www.docker.com) container:
+Pull the [Docker container](https://hub.docker.com/repository/docker/eexit/mirror-http-server):
 
     docker pull eexit/mirror-http-server
 
 Start the container:
 
-    $ docker run -itp 80:80 eexit/mirror-http-server
-    2015-11-05T20:59:57.353Z]  INFO: mirror-http-server/17 on ccc867df5980: Listening on http://0.0.0.0:80
+    $ docker run -itp 8080:8080 eexit/mirror-http-server
+    2015-11-05T20:59:57.353Z]  INFO: mirror-http-server/17 on ccc867df5980: Listening on http://0.0.0.0:8080
 
 For this README examples, I use the great [HTTPie](https://github.com/jkbrzt/httpie) tool.
 
-Send request againt it:
+Send request against it:
 
-    http :80
+    http :8080
 
 ```http
 HTTP/1.1 200 OK
@@ -40,25 +40,10 @@ You can change the server response code and body by setting specific `X-Mirror-*
 ### `X-Mirror-Code`
 
 Change the server response [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
-Here, simulate a server error:
 
-```bash
-time http :80 X-Mirror-Code:503 X-Mirror-Delay:2000
-HTTP/1.1 503 Service Unavailable
-Connection: keep-alive
-Content-Length: 0
-Date: Fri, 20 May 2022 09:52:04 GMT
-Keep-Alive: timeout=5
-X-Powered-By: Express
+Examples that simulates a `301` redirection and a `Content-Type` change:
 
-
-
-http :80 X-Mirror-Code:503 X-Mirror-Delay:2000  0.12s user 0.03s system 7% cpu 2.163 total
-```
-
-Here, simulates a `301` redirection and a `Content-Type` change:
-
-    http :80 \
+    http :8080 \
         X-Mirror-Code:301 \
         X-Mirror-Location:http://www.eexit.net \
         X-Mirror-Content-Type:"text/plain; charset=ISO-8859-1"
@@ -96,6 +81,25 @@ If you check the container logs:
       },
       "body": {}
     }
+```
+
+### `X-Mirror-Delay`
+
+If you need to test timeouts or errors handling like `503` HTTP responses, you can pass the
+`X-Mirror-Delay` header with a number in milliseconds before the server responds.
+
+```bash
+time http :8080 X-Mirror-Code:503 X-Mirror-Delay:2000
+HTTP/1.1 503 Service Unavailable
+Connection: keep-alive
+Content-Length: 0
+Date: Fri, 20 May 2022 09:52:04 GMT
+Keep-Alive: timeout=5
+X-Powered-By: Express
+
+
+
+http :8080 X-Mirror-Code:503 X-Mirror-Delay:2000  0.12s user 0.03s system 7% cpu 2.163 total
 ```
 
 ### `X-Mirror-Request`
@@ -171,7 +175,7 @@ X-Powered-By: Express
 
 Note: if you don't specify the `true` value for the header, it'll ignored.
 
-### Works for all headers
+### Works with any headers
 
 Aside to the previous three special headers, you can set your wanted response header by prepending your header name by `X-Mirror-`.
 
