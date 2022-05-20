@@ -10,7 +10,7 @@ Build to play with HTTP or test your API. Make a HTTP call to the dummy server w
 
 Pull the [Docker](https://www.docker.com) container:
 
-    $ docker pull eexit/mirror-http-server
+    docker pull eexit/mirror-http-server
 
 Start the container:
 
@@ -42,14 +42,18 @@ You can change the server response code and body by setting specific `X-Mirror-*
 Change the server response [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 Here, simulate a server error:
 
-    $ http :80 X-Mirror-Code:503
-
-```http
+```bash
+time http :80 X-Mirror-Code:503 X-Mirror-Delay:2000
 HTTP/1.1 503 Service Unavailable
 Connection: keep-alive
 Content-Length: 0
-Date: Wed, 13 Mar 2019 12:38:39 GMT
+Date: Fri, 20 May 2022 09:52:04 GMT
+Keep-Alive: timeout=5
 X-Powered-By: Express
+
+
+
+http :80 X-Mirror-Code:503 X-Mirror-Delay:2000  0.12s user 0.03s system 7% cpu 2.163 total
 ```
 
 Here, simulates a `301` redirection and a `Content-Type` change:
@@ -164,6 +168,7 @@ X-Powered-By: Express
     "key2": "value2"
 }
 ```
+
 Note: if you don't specify the `true` value for the header, it'll ignored.
 
 ### Works for all headers
@@ -199,4 +204,4 @@ Date: some date
 
 ## Todo
 
- - Functional testing
+- Functional testing

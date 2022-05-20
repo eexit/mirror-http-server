@@ -1,15 +1,15 @@
 'use strict';
 
-var host = '0.0.0.0';
-var port = 80;
+const host = '0.0.0.0',
+    port = 80;
 
-var _ = require('lodash');
-var bunyan = require('bunyan');
-var bodyParser = require('body-parser');
-var pckg = require(__dirname + '/package.json');
-var logger = bunyan.createLogger({name: pckg.name});
-var express = require('express');
-var app = express();
+const _ = require('lodash'),
+    bunyan = require('bunyan'),
+    bodyParser = require('body-parser'),
+    pckg = require(__dirname + '/package.json'),
+    logger = bunyan.createLogger({ name: pckg.name }),
+    express = require('express'),
+    app = express();
 
 app.enable('trust proxy');
 app.use(bodyParser.json());
@@ -18,38 +18,38 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Intercepts all HTTP verb requests
 app.all('*', function (req, res, next) {
     // Returned response headers
-    var responseHeaders = {};
+    const responseHeaders = {};
 
     // Parses the wanted response code
-    var mirrorCode = req.get('X-Mirror-Code') || 200;
+    const mirrorCode = req.get('X-Mirror-Code') || 200;
+
+    const delay = req.get('X-Mirror-Delay') || 0;
 
     // Finds out if the request should be returned as the response
-    var mirrorRequest = (req.get('X-Mirror-Request')
+    const mirrorRequest = (req.get('X-Mirror-Request')
         && req.get('X-Mirror-Request').toLowerCase() == 'true')
         || false;
 
     // Finds out if the response should be returned
-    var mirrorBody = (req.get('X-Mirror-Body')
+    const mirrorBody = (req.get('X-Mirror-Body')
         && req.get('X-Mirror-Body').toLowerCase() == 'true')
         || false;
 
     // Parses X-Mirror-* headers, skips app specific headers
-    var reqHeaders = _.without(
+    const reqHeaders = _.without(
         _.filter(
-            Object.keys(req.headers), function (name) {
-                return _.startsWith(name, 'x-mirror-');
-            }
-        ), 'x-mirror-code', 'x-mirror-request', 'x-mirror-body'
+            Object.keys(req.headers), (name) => _.startsWith(name, 'x-mirror-')
+        ), 'x-mirror-code', 'x-mirror-request', 'x-mirror-body', 'x-mirror-delay'
     );
 
     // Injects X-Mirror-* headers to response headers
     reqHeaders.forEach(function (name) {
-        var resHeader = _.startCase(_.trimStart(name, 'x-mirror-')).replace(' ', '-');
+        const resHeader = _.startCase(_.trimStart(name, 'x-mirror-')).replace(' ', '-');
         responseHeaders[resHeader] = req.headers[name];
     });
 
     // Builds the request object
-    var request = {
+    const request = {
         request: {
             ip: req.ip,
             ips: req.ips,
@@ -74,7 +74,7 @@ app.all('*', function (req, res, next) {
     }
 
     // Flushes!
-    res.end();
+    return setTimeout(() => res.end(), delay);
 });
 
 // Basic error handler
@@ -83,6 +83,4 @@ app.use(function (err, req, res, next) {
     res.status(500).json(err);
 });
 
-app.listen(port, host, 511, function () {
-    logger.info('Listening on http://%s:%s', host, port);
-});
+app.listen(port, host, 511, () => logger.info('Listening on http://%s:%s', host, port));
