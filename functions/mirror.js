@@ -1,8 +1,5 @@
 'use strict';
 
-const host = '0.0.0.0',
-    port = 8080;
-
 const _ = require('lodash'),
     bunyan = require('bunyan'),
     bodyParser = require('body-parser'),
@@ -15,13 +12,13 @@ app.enable('trust proxy');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Intercepts all HTTP verb requests
+// Intercepts all HTTP verbs requests
 app.all('*', function (req, res, next) {
     // Returned response headers
     const responseHeaders = {};
 
     // Parses the wanted response code
-    const mirrorCode = req.get('X-Mirror-Code') || 200;
+    const mirrorCode = parseInt(req.get('X-Mirror-Code')) || 200;
 
     const delay = req.get('X-Mirror-Delay') || 0;
 
@@ -82,4 +79,7 @@ app.use(function (err, req, res, next) {
     res.status(500).json(err);
 });
 
-app.listen(port, host, 511, () => logger.info('Listening on http://%s:%s', host, port));
+module.exports = {
+    app: app,
+    logger: logger,
+};
