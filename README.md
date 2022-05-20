@@ -1,8 +1,10 @@
 ![logo](logo.png)
 
-# Mirror HTTP Server [![Build Status](https://travis-ci.org/eexit/mirror-http-server.svg)](https://travis-ci.org/eexit/mirror-http-server) [![DockerHub](https://img.shields.io/badge/docker-hub-brightgreen.svg?style=flat)](https://hub.docker.com/r/eexit/mirror-http-server/)
+# Mirror HTTP Server [![DockerHub](https://img.shields.io/docker/image-size/eexit/mirror-http-server?color=brightgreen)](https://hub.docker.com/r/eexit/mirror-http-server/) [![Firebase function](https://img.shields.io/badge/firebase-function-brightgreen)](https://mirror-http-server.web.app)
 
 *A dummy HTTP server that responds whatever you told it to.*
+
+Testing URL: <https://mirror-http-server.web.app>
 
 Built to play with HTTP or test your API. Make a HTTP call to the dummy server with the specified headers you want the server responds with.
 

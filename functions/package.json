@@ -1,12 +1,15 @@
 {
     "name": "mirror-http-server",
-    "version": "2.0.0",
     "description": "A dummy HTTP server that responds whatever you told it to",
     "scripts": {
         "start": "node server.js | npm run bunyan",
         "start:dev": "nodemon server.js | npm run bunyan",
         "test": "echo \"No test specified yet\"",
-        "bunyan": "$(npm bin)/bunyan"
+        "bunyan": "$(npm bin)/bunyan",
+        "serve": "firebase emulators:start --only functions",
+        "shell": "firebase functions:shell",
+        "deploy": "firebase deploy --only functions",
+        "logs": "firebase functions:log"
     },
     "keywords": [
         "node",
@@ -21,11 +24,16 @@
     ],
     "author": "Joris Berthelot <admin@eexit.net>",
     "license": "MIT",
+    "engines": {
+        "node": "16"
+    },
     "dependencies": {
         "body-parser": "^1.20.0",
         "bunyan": "^1.8.15",
         "express": "^4.18",
-        "lodash": ">=4.17.21"
+        "lodash": ">=4.17.21",
+        "firebase-admin": "^10.0.2",
+        "firebase-functions": "^3.18.0"
     },
     "devDependencies": {
         "nodemon": "^2.0.0"
