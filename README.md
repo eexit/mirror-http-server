@@ -208,6 +208,42 @@ X-Powered-By: eexit-engine
 Date: some date
 ```
 
+## Development
+
+You can either use Docker to run the server locally or emulate the function using Firebase CLI:
+
+In one terminal, run this command:
+
+```
+firebase emulators:start
+```
+
+In another terminal, test it:
+
+```
+http http://localhost:5001/mirror-http-server/us-central1/mirror X-Mirror-Body:true message="Hello world\!"
+HTTP/1.1 200 OK
+connection: keep-alive
+content-length: 26
+content-type: application/json; charset=utf-8
+date: Sun, 06 Nov 2022 10:56:21 GMT
+etag: W/"1a-T7vCLEZV7pLSyUzkr9XBdG32YU8"
+keep-alive: timeout=5
+x-powered-by: Express
+
+{
+    "message": "Hello world!"
+}
+```
+
+## Deployment
+
+This service is host as [Google Clound Platform Cloud Function](https://firebase.google.com/docs/functions).
+
+```
+firebase deploy --only functions
+```
+
 ## Todo
 
 - Functional testing
