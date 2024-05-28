@@ -215,7 +215,9 @@ You can either use Docker to run the server locally or emulate the function usin
 In one terminal, run this command:
 
 ```
-firebase emulators:start
+cd functions
+yarn
+firebase emulators:start --only functions
 ```
 
 In another terminal, test it:
